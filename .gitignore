@@ -2,6 +2,7 @@ temp/
 
 *.exe
 *.out
+*.json
 
 my_output.txt
 my_input.txt
