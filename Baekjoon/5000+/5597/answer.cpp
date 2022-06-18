@@ -26,12 +26,19 @@ int N, M;
 
 int main(){
    #ifdef LOCAL
-      freopen("data/data.txt", "r", stdin);
+      freopen("data/data2.txt", "r", stdin);
    //    freopen("data/input.txt", "r", stdin);
-   //  freopen("data/output.txt", "w", stdout);
+      freopen("data/output.txt", "w", stdout);
    #endif
-   ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-   cin >> N;
-   cout << N << '\n';
-
+   ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);\
+   vector<int> v = vector<int>(30,0);
+   for(int i = 0; i < 28; i++){
+      cin >> N;
+      v[N-1]++;
+   }
+   for(int i = 0; i < 30; i++){
+      if(v[i] == 0){
+         cout << i+1 << '\n';
+      }
+   }
 }
