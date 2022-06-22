@@ -42,7 +42,7 @@ int main(){
       cin >> a >> b;
       pv[i] = {a,b};
    }
-   // sort(all(pv),compare);
+   sort(all(pv),compare);
    int res = 0;
    vector<pii>::iterator iter = pv.begin();
    int cur = -1;
