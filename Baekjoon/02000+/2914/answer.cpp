@@ -14,16 +14,10 @@ typedef unsigned long long ull;
 
 using namespace std;
 
-typedef pair<string,int> psi;
-typedef pair<int,string> pis;
-
 int dx[4] = {1,-1,0,0};
 int dy[4] = {0,0,1,-1};
 
 int N, M;
-
-map<string,int> sv;
-map<int,string> vs;
 
 int main(){
    #ifdef LOCAL
@@ -33,19 +27,6 @@ int main(){
    #endif
    ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);
    cin >> N >> M;
-   string str;
-   for(int i = 0; i < N ;i++){
-      sf1(str);
-      sv.insert(psi(str,i));
-      vs.insert(pis(i,str));
-   }
-   for(int i = 0; i < M; i++){
-      sf1(str);
-      if(str[0] <= '9' && str[0] >= '0'){
-         int i = stoi(str);
-         cout << vs[i-1]  << '\n';
-      } else {
-         cout << sv[str]+1 << '\n';
-      }
-   }
+   cout << N*(M-1)+1 << '\n';
+
 }

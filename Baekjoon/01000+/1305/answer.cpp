@@ -14,16 +14,25 @@ typedef unsigned long long ull;
 
 using namespace std;
 
-typedef pair<string,int> psi;
-typedef pair<int,string> pis;
-
 int dx[4] = {1,-1,0,0};
 int dy[4] = {0,0,1,-1};
 
-int N, M;
+vector<int> getPi(string M){
+   int m = (int)M.size();
+   vector<int> pi(m,0);
+   for(int i = 1, j = 0; i < m; i++){
+      while(j > 0 & M[i]!=M[j]){
+         j = pi[j-1];
+      }
+      if(M[i] == M[j]){
+         pi[i] = ++j;
+      }
+   }
+   return pi;
+}
 
-map<string,int> sv;
-map<int,string> vs;
+int N;
+string str;
 
 int main(){
    #ifdef LOCAL
@@ -32,20 +41,7 @@ int main(){
    //  freopen("data/output.txt", "w", stdout);
    #endif
    ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-   cin >> N >> M;
-   string str;
-   for(int i = 0; i < N ;i++){
-      sf1(str);
-      sv.insert(psi(str,i));
-      vs.insert(pis(i,str));
-   }
-   for(int i = 0; i < M; i++){
-      sf1(str);
-      if(str[0] <= '9' && str[0] >= '0'){
-         int i = stoi(str);
-         cout << vs[i-1]  << '\n';
-      } else {
-         cout << sv[str]+1 << '\n';
-      }
-   }
+   cin >> N >> str;
+   auto res = getPi(str);
+   cout << N-res[res.size()-1] << '\n';
 }
