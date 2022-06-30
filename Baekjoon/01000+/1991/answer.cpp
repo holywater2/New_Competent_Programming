@@ -17,21 +17,16 @@ using namespace std;
 int dx[4] = {1,-1,0,0};
 int dy[4] = {0,0,1,-1};
 
-str N, M;
-string str;
+int N, M;
 
 int main(){
    #ifdef LOCAL
-      // freopen("data/data.txt", "r", stdin);
-      freopen("data/input.txt", "r", stdin);
+      freopen("data/data.txt", "r", stdin);
+   //    freopen("data/input.txt", "r", stdin);
    //  freopen("data/output.txt", "w", stdout);
    #endif
    ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-   cin >> N >> str >> M;
-   if(str == "+"){
-      
-   } else if (str == "*") {
-      N = N*M;
-   }
+   cin >> N;
    cout << N << '\n';
+
 }
