@@ -10,9 +10,9 @@
 #define all(v)      v.begin(),v.end()
 #define INF 987654321   
 
-typedef unsigned long long ull;
-
 using namespace std;
+
+typedef unsigned long long ull;
 
 int dx[4] = {1,-1,0,0};
 int dy[4] = {0,0,1,-1};
