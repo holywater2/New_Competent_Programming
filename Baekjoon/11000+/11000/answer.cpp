@@ -31,6 +31,25 @@ int main(){
    #endif
    ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);
    cin >> N;
-   cout << N << '\n';
-
+   priority_queue<pii,vector<pii>,greater<pii>> cl;
+   multiset<int> ms;
+   priority_queue<int,vector<int>,greater<int>> pq;
+   for(int i = 0; i < N; i++){
+      int s, f;
+      cin >> s >> f;
+      cl.push(pii(s,f));
+   }
+   for(int i = 0; i < N; i++){
+      pii cur = cl.top();
+      cl.pop();
+      if(pq.empty()){
+         pq.push(cur.second);
+      } else {
+         if(pq.top() <= cur.first){
+            pq.pop();
+         }
+         pq.push(cur.second);
+      }
+   }
+   cout << pq.size() << '\n';
 }

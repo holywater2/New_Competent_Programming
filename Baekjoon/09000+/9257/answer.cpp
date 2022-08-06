@@ -21,16 +21,33 @@ typedef pair<int,int> pii;
 int dx[4] = {1,-1,0,0};
 int dy[4] = {0,0,1,-1};
 
-int N, M;
+ll N, M;
 
 int main(){
    #ifdef LOCAL
-      freopen("data/data.txt", "r", stdin);
+      // freopen("data/data.txt", "r", stdin);
    //    freopen("data/input.txt", "r", stdin);
    //  freopen("data/output.txt", "w", stdout);
    #endif
    ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-   cin >> N;
-   cout << N << '\n';
-
+   cin >> N >> M;
+   ll res = 0;
+   ll Nres = 0;
+   ll count = 2;
+   N -= 1;
+   while(M >= count/2){
+      if(N >= count/2){
+         res -= (N/count)*(count/2);
+         ll temp = (N%count) - (count-1)/2;
+         if(temp > 0)
+            res -= temp;
+      }
+      res += (M/count)*(count/2);
+      ll temp = (M%count) - (count-1)/2;
+      if(temp > 0)
+         res += temp;
+      count *= 2;
+   }
+   // cout << Nres << ' ' << res << '\n';
+   pf1(res);
 }

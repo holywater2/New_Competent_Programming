@@ -30,7 +30,20 @@ int main(){
    //  freopen("data/output.txt", "w", stdout);
    #endif
    ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-   cin >> N;
-   cout << N << '\n';
-
+   cin >> N >> M;
+   priority_queue<pii, vector<pii>, greater<pii>> pq;
+   int ans[N];
+   for(int i = 0 ; i < N; i++){
+      int cur;
+      cin >> cur;
+      pq.push({cur,i});
+      while(pq.top().second < i-M+1){
+         pq.pop();
+      }
+      ans[i] = pq.top().first;
+   }
+   for(int i = 0; i < N; i++){
+      cout << ans[i] << ' ';
+   }
+   cout << '\n';
 }

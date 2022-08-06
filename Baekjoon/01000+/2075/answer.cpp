@@ -31,6 +31,16 @@ int main(){
    #endif
    ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);
    cin >> N;
-   cout << N << '\n';
-
+   priority_queue<int> pq;
+   for(int i = 0 ; i < N; i++){
+      for(int j = 0; j < N; j++){
+         int cur;
+         cin >> cur;
+         pq.push(-cur);
+         if(pq.size() > N){
+            pq.pop();
+         }
+      }
+   }
+   cout << -pq.top() << '\n';
 }
