@@ -17,6 +17,24 @@ int bitsmask(int cur, int pos){
         return (cur | (1<<pos));
     }
 }
+
+int dfs(int x, int y, int pos, int depth){
+    int res = depth;
+    for(int i = 0; i < 4; i++){
+        int nx = x + dx[i];
+        int ny = y + dy[i];
+        if(inR(0,nx,R) && inR(0,ny,C)){
+            int bits = bitsmask(pos,board[nx][ny]);
+            // cout << "here " << x << ' ' << y << ' ' << pos << '\n';
+            // cout << nx << ' ' << ny << ' ' << bits << '\n';
+            if(bits != 0){
+                res = max(dfs(nx,ny,bits,depth+1),res);
+            }
+        }
+    }
+    return res;
+}
+
 queue<pii> q;
 queue<pii> pt;
 
@@ -57,5 +75,5 @@ int main(){
             board[i][j] = inp.at(j)-'A';
         }
     }
-    cout << bfs() << '\n';
+    cout << dfs(0,0,bitsmask(0,board[0][0]),1) << '\n';
 }
