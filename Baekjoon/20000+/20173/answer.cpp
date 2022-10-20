@@ -25,12 +25,26 @@ int N, M;
 
 int main(){
    #ifdef LOCAL
-      freopen("data/data.txt", "r", stdin);
+      // freopen("data/data.txt", "r", stdin);
    //    freopen("data/input.txt", "r", stdin);
    //  freopen("data/output.txt", "w", stdout);
    #endif
    ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);
    cin >> N;
-   cout << N << '\n';
-
+   ll sum = 0;
+   bool res = true;
+   for(int i = 1; i <= N; i++){
+      int n; cin >> n;
+      if(i < 3 || i > N-2){
+         if(n >= N-1)
+            res = false;
+      } else {
+         if(n >= N-2)
+            res = false;
+      }
+      sum += n;
+   }
+   if(sum % 2 != 0) res = false;
+   if(res) cout << "YES\n";
+   else cout << "NO\n";
 }

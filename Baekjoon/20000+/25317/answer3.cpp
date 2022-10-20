@@ -51,31 +51,30 @@ int query(int node, int lo, int hi, int l, int r){
 
 int main(){
    #ifdef LOCAL
-      // freopen("data/data.txt", "r", stdin);
-    //   freopen("data/input.txt", "r", stdin);
-   //  freopen("data/output.txt", "w", stdout);
+      freopen("data/data.txt", "r", stdin);
    #endif
    ios::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-   cin >> N;
-   
+   cin >> N; // Number of Query Q
+
    // Part 1. data 전처리 구문
    // (1) 모든 쿼리를 받아들여서 저장을 함
    // (2) 1번 쿼리가 주어지면, b/a가 int이면 set hs에 넣고, double(b/a)를 quest에 저장함
    // (3) 2번 쿼리가 주어지면, c를 vector dir에 넣고, c가 set hs에 있으면 quest에 -1을 저장함
    for(int i = 0; i < N; i++){
       cin >> argl[i][0];
-      if(argl[i][0] == 1){
+      if(argl[i][0] == 1){ // query 1
          cin >> argl[i][1] >> argl[i][2];
+         // case 1: a == 0, do nothing
+         // case 2: a != 0, preprocess -> make ceil(-b/a)
          if(argl[i][1] != 0){
-            if(argl[i][2] % argl[i][1] == 0){
-               hs.insert((ll)(argl[i][2]/argl[i][1]));
-            }
-            quest[i] = (long double)argl[i][2]/argl[i][1];
+            if(argl[i][2] % argl[i][1] == 0)
+               hs.insert(argl[i][2]/argl[i][1]);
+            quest[i] = (ll)floor(-argl[i][2]/(long double)argl[i][1]);
          }
-      } else {
+      } else { // query 2
          cin >> argl[i][1];
-         dir.pb(-argl[i][1]);
-         if(hs.find(-argl[i][1]) != hs.end()){
+         dir.pb(argl[i][1]);
+         if(hs.count(-argl[i][1]) != 0){
             quest[i] = -1;
          }
       }
@@ -86,6 +85,10 @@ int main(){
    // (2) dir의 원소를 가지고 segment 트리를 만듬
    sort(all(dir));
    dir.erase(unique(all(dir)),dir.end());
+   // for(auto a: dir){
+   //    cout << a << " ";
+   // }
+   // cout << '\n';
 
    int h = (int)ceil(log2(dir.size()));
    int tree_size = (1 << (h+1));
@@ -93,23 +96,6 @@ int main(){
 
    int dsize = dir.size();
    int sign = 1;
-
-    // debug
-//    for(int i = 0; i <dsize; i++){
-//       cout << dir[i] << ' ';
-//    } cout << '\n';
-
-//    update(1,0,dsize-1,2);
-//    int kkk = 1;
-//    for(int i = 1; i <tree_size; i++){
-//       cout << seg[i] << ' ';
-//       if(i%kkk == kkk-1){
-//          cout << '\n';
-//          kkk*=2;
-//       }
-//    } cout << '\n';
-
-
 
 
    // Part 3. 쿼리 처리 구문
@@ -123,34 +109,22 @@ int main(){
             else if(argl[i][2] < 0) sign *= -1;
          } else {
             if(argl[i][1] < 0) sign *= -1; // a의 부호를 밖으로 빼줌
-            long double t = argl[i][2]/(long double)argl[i][1];
-            auto it = lower_bound(all(dir),t);
-            // pf1(t);
-            if(it == dir.end()){
-                // pf2(dir[it-dir.begin()-1],t);
-            } else{
+            double cur  = -(double)argl[i][2]/argl[i][1];
+            // pf2(i,cur);
+            if(cur >= dir.front()){
+               auto it = lower_bound(all(dir),cur);
                int idx = it-dir.begin();
+               if(it == dir.end()) idx--;
                update(1,0,dsize-1,idx);
-               
-                // pf2(idx,-argl[i][2]/(double)argl[i][1]);
-                // pf2(dir[idx],-argl[i][2]/(double)argl[i][1]);
-
-                // int kkk = 1;
-                // for(int i = 1; i <tree_size; i++){
-                //     cout << seg[i] << ' ';
-                //     if(i%kkk == kkk-1){
-                //         cout << '\n';
-                //         kkk*=2;
-                //     }
-                // } cout << '\n';
             }
          }
       } else {
          if(quest[i] == -1 || sign == 0){
             cout << 0 << '\n';
          } else {
-            int cidx = lower_bound(all(dir),-argl[i][1])-dir.begin();
-            int res = (query(1,0,dsize-1,0,cidx)%2)*-2+1;
+            int cidx = lower_bound(all(dir),argl[i][1])-dir.begin();
+            // pf2(cidx,query(1,0,dsize-1,cidx,dsize-1));
+            int res = (query(1,0,dsize-1,cidx,dsize-1)%2)*-2+1;
             // pf1(cidx);
             // pf2(res,sign);
             if(res*sign < 0){
@@ -161,5 +135,4 @@ int main(){
          }
       }
    }
-
 }
